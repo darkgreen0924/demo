@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lq.demo.mapper.UserMapper">
+    <resultMap id="man" type="com.lq.demo.dto.Man">
+        <id property="idCard" column="id_card"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="phone" column="phone"/>
+        <association property="wife" select="searchWoman" column="wife"/>
+        <collection property="items" select="com.lq.demo.mapper.ItemMapper.listItem" column="id_card"
+                    ofType="com.lq.demo.dto.Item"/>
+    </resultMap>
+
+    <resultMap id="woman" type="com.lq.demo.dto.Woman">
+        <id property="idCard" column="id_card"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="phone" column="phone"/>
+        <association property="wife" select="searchWoman" column="wife"/>
+    </resultMap>
+
+    <select id="searchMan" resultMap="man">
+        select id_card,name,age,phone,wife from male where id_card = #{id};
+    </select>
+
+    <select id="searchWoman" resultMap="woman">
+        select id_card,name,age,phone from female where id_card = #{wife};
+    </select>
+
+    <delete id="deleteUser">
+        delete from male where id_card = #{id}
+    </delete>
+
+</mapper>
