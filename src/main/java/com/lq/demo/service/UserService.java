@@ -2,6 +2,8 @@ package com.lq.demo.service;
 
 import com.lq.demo.dto.Man;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * UserService
  *
@@ -14,7 +16,9 @@ public interface UserService {
 
     boolean deleteUser(String id);
 
-    Man searchUser(String id);
+    Man searchUser(String id) throws ExecutionException, InterruptedException;
+
+    Man searchUser2(String id);
 
     boolean updateUser(Man user);
 }

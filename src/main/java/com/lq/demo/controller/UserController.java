@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * UserMapper.xml
  *
@@ -23,8 +25,14 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/search/{id}")
-    public Result<Man> searchUser(@PathVariable("id") String id) {
+    public Result<Man> searchUser(@PathVariable("id") String id) throws ExecutionException, InterruptedException {
         Man user = userService.searchUser(id);
+        return Result.success(user);
+    }
+
+    @GetMapping("/search2/{id}")
+    public Result<Man> searchUser2(@PathVariable("id") String id) {
+        Man user = userService.searchUser2(id);
         return Result.success(user);
     }
 
@@ -38,4 +46,5 @@ public class UserController {
         boolean b = userService.deleteUser(id);
         return Result.success(b);
     }
+
 }
